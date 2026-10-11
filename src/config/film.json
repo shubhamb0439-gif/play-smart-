@@ -1,0 +1,79 @@
+{
+  "clips": {
+    "curl": {
+      "count": 93,
+      "fps": 24,
+      "focusX": 0.56,
+      "desktop": {
+        "folder": "/film/curl/desktop",
+        "width": 1920,
+        "height": 1080,
+        "bytes": 4476928
+      },
+      "mobile": {
+        "folder": "/film/curl/mobile",
+        "width": 720,
+        "height": 900,
+        "bytes": 2586842
+      },
+      "colors": {
+        "border": "#010000",
+        "left": "#010000",
+        "right": "#010000",
+        "top": "#020001",
+        "bottom": "#140000"
+      }
+    },
+    "squat": {
+      "count": 116,
+      "fps": 24,
+      "focusX": 0.5,
+      "desktop": {
+        "folder": "/film/squat/desktop",
+        "width": 1920,
+        "height": 1080,
+        "bytes": 9573286
+      },
+      "mobile": {
+        "folder": "/film/squat/mobile",
+        "width": 720,
+        "height": 900,
+        "bytes": 4306130
+      },
+      "colors": {
+        "border": "#000000",
+        "left": "#030000",
+        "right": "#000000",
+        "top": "#000000",
+        "bottom": "#100000"
+      }
+    },
+    "deadlift": {
+      "count": 145,
+      "fps": 24,
+      "focusX": 0.5,
+      "desktop": {
+        "folder": "/film/deadlift/desktop",
+        "width": 1920,
+        "height": 1080,
+        "bytes": 13747756
+      },
+      "mobile": {
+        "folder": "/film/deadlift/mobile",
+        "width": 720,
+        "height": 900,
+        "bytes": 5668880
+      },
+      "colors": {
+        "border": "#000000",
+        "left": "#060000",
+        "right": "#000000",
+        "top": "#000000",
+        "bottom": "#390103"
+      }
+    }
+  },
+  "version": "mv3z37a5",
+  "pad": 4,
+  "pattern": "frame_{index}.webp"
+}

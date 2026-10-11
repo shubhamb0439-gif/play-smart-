@@ -1,0 +1,168 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #050505;
+  --color-coal: #0d0d0e;
+  --color-ash: #1a1a1c;
+  --color-smoke: #8a8a90;
+  --color-bone: #ededed;
+  --color-red: #dc293b;
+  --color-red-hot: #ff2f45;
+  --font-display: var(--font-archivo), "Arial Black", sans-serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  background: var(--color-ink);
+  color: var(--color-bone);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+html.scroll-locked {
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-ink);
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-red);
+  color: #fff;
+}
+
+/* Wide, heavy display type to echo the logo's extended letterforms. */
+.display {
+  font-family: var(--font-display);
+  font-stretch: 125%;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 0.88;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  font-family: var(--font-display);
+  font-stretch: 112%;
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+.outline-text {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgb(255 255 255 / 0.85);
+}
+
+/* Lines that slide up from a clipped box. */
+.line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+}
+.line > span {
+  display: block;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Buttons */
+.btn-primary,
+.btn-ghost {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.95rem 1.6rem;
+  font-family: var(--font-display);
+  font-stretch: 112%;
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+  transition:
+    background-color 0.3s var(--ease-out-expo),
+    color 0.3s var(--ease-out-expo),
+    transform 0.3s var(--ease-out-expo);
+}
+.btn-primary {
+  background: var(--color-red);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--color-red-hot);
+  transform: translateY(-2px);
+}
+.btn-ghost {
+  background: rgb(255 255 255 / 0.08);
+  color: #fff;
+  backdrop-filter: blur(6px);
+}
+.btn-ghost:hover {
+  background: #fff;
+  color: var(--color-ink);
+}
+.btn-primary:focus-visible,
+.btn-ghost:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+/* Hero copy waits for the 3D intro. */
+[data-hero] [data-line] {
+  visibility: hidden;
+}
+[data-hero] [data-fade],
+[data-scroll-cue] {
+  opacity: 0;
+}
+
+@keyframes cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(200%);
+  }
+}
+
+/* Form fields */
+.field {
+  width: 100%;
+  background: rgb(255 255 255 / 0.04);
+  border: 1px solid rgb(255 255 255 / 0.12);
+  padding: 0.9rem 1rem;
+  color: #fff;
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+}
+.field:focus {
+  outline: none;
+  border-color: var(--color-red);
+}
+.field[aria-invalid="true"] {
+  border-color: var(--color-red-hot);
+}
+select.field option {
+  background: #111;
+}
