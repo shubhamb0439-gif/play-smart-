@@ -1,21 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ink: #050505;
-  --color-coal: #0d0d0e;
-  --color-ash: #1a1a1c;
-  --color-smoke: #8a8a90;
-  --color-bone: #ededed;
+  /* Light theme: the page background matches the film's #fdfdfd studio white. */
+  --color-paper: #fdfdfd;
+  --color-mist: #f3f3f4;
+  --color-ink: #0c0c0d;
   --color-red: #dc293b;
-  --color-red-hot: #ff2f45;
+  --color-red-hot: #c41d2f;
   --font-display: var(--font-archivo), "Arial Black", sans-serif;
   --font-sans: var(--font-inter), system-ui, sans-serif;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 html {
-  background: var(--color-ink);
-  color: var(--color-bone);
+  background: var(--color-paper);
+  color: var(--color-ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -32,7 +31,7 @@ html.scroll-locked {
 
 body {
   font-family: var(--font-sans);
-  background: var(--color-ink);
+  background: var(--color-paper);
   overflow-x: clip;
 }
 
@@ -62,7 +61,7 @@ body {
 
 .outline-text {
   color: transparent;
-  -webkit-text-stroke: 1.5px rgb(255 255 255 / 0.85);
+  -webkit-text-stroke: 1.5px var(--color-ink);
 }
 
 /* Lines that slide up from a clipped box. */
@@ -114,17 +113,16 @@ body {
   transform: translateY(-2px);
 }
 .btn-ghost {
-  background: rgb(255 255 255 / 0.08);
+  background: var(--color-ink);
   color: #fff;
-  backdrop-filter: blur(6px);
 }
 .btn-ghost:hover {
-  background: #fff;
-  color: var(--color-ink);
+  background: var(--color-red);
+  transform: translateY(-2px);
 }
 .btn-primary:focus-visible,
 .btn-ghost:focus-visible {
-  outline: 2px solid #fff;
+  outline: 2px solid var(--color-ink);
   outline-offset: 3px;
 }
 
@@ -149,10 +147,10 @@ body {
 /* Form fields */
 .field {
   width: 100%;
-  background: rgb(255 255 255 / 0.04);
-  border: 1px solid rgb(255 255 255 / 0.12);
+  background: #fff;
+  border: 1px solid rgb(12 12 13 / 0.14);
   padding: 0.9rem 1rem;
-  color: #fff;
+  color: var(--color-ink);
   font-size: 0.95rem;
   transition: border-color 0.2s;
 }
@@ -163,6 +161,6 @@ body {
 .field[aria-invalid="true"] {
   border-color: var(--color-red-hot);
 }
-select.field option {
-  background: #111;
+.field::placeholder {
+  color: rgb(12 12 13 / 0.4);
 }

@@ -1,79 +1,79 @@
 {
   "clips": {
     "curl": {
-      "count": 93,
+      "count": 87,
       "fps": 24,
-      "focusX": 0.56,
+      "focusX": 0.5,
       "desktop": {
         "folder": "/film/curl/desktop",
         "width": 1920,
         "height": 1080,
-        "bytes": 4476928
+        "bytes": 2890166
       },
       "mobile": {
         "folder": "/film/curl/mobile",
         "width": 720,
         "height": 900,
-        "bytes": 2586842
+        "bytes": 2053858
       },
       "colors": {
-        "border": "#010000",
-        "left": "#010000",
-        "right": "#010000",
-        "top": "#020001",
-        "bottom": "#140000"
+        "border": "#fdfdfd",
+        "left": "#fdfdfd",
+        "right": "#fdfdfd",
+        "top": "#fdfdfd",
+        "bottom": "#fcf0f1"
       }
     },
     "squat": {
-      "count": 116,
+      "count": 145,
       "fps": 24,
       "focusX": 0.5,
       "desktop": {
         "folder": "/film/squat/desktop",
         "width": 1920,
         "height": 1080,
-        "bytes": 9573286
+        "bytes": 7146172
       },
       "mobile": {
         "folder": "/film/squat/mobile",
         "width": 720,
         "height": 900,
-        "bytes": 4306130
+        "bytes": 4471736
       },
       "colors": {
-        "border": "#000000",
-        "left": "#030000",
-        "right": "#000000",
-        "top": "#000000",
-        "bottom": "#100000"
+        "border": "#fdfdfd",
+        "left": "#fdfdfd",
+        "right": "#fdfdfd",
+        "top": "#fdfdfd",
+        "bottom": "#f5b6b9"
       }
     },
     "deadlift": {
-      "count": 145,
+      "count": 83,
       "fps": 24,
       "focusX": 0.5,
       "desktop": {
         "folder": "/film/deadlift/desktop",
         "width": 1920,
         "height": 1080,
-        "bytes": 13747756
+        "bytes": 3521148
       },
       "mobile": {
         "folder": "/film/deadlift/mobile",
         "width": 720,
         "height": 900,
-        "bytes": 5668880
+        "bytes": 2054140
       },
       "colors": {
-        "border": "#000000",
-        "left": "#060000",
-        "right": "#000000",
-        "top": "#000000",
-        "bottom": "#390103"
+        "border": "#ffffff",
+        "left": "#fffffc",
+        "right": "#fffffe",
+        "top": "#ffffff",
+        "bottom": "#fdfdfb"
       }
     }
   },
-  "version": "mv3z37a5",
+  "version": "mv41v5eq",
   "pad": 4,
   "pattern": "frame_{index}.webp"
 }

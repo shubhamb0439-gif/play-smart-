@@ -32,15 +32,19 @@ export default function Header() {
   };
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter] duration-500 [[data-clean]_&]:hidden ${
-        scrolled && !open ? "bg-ink/60 backdrop-blur-md" : ""
-      }`}
-    >
-      <div className="flex h-[72px] items-center justify-between px-5 md:px-12 lg:px-20">
+    <header className="fixed inset-x-0 top-0 z-50 [[data-clean]_&]:hidden">
+      {/* Frosted-glass bar. Lives on its own layer: a backdrop-filter on <header> would trap the
+          fixed mobile menu inside the 72px bar. */}
+      <div
+        aria-hidden
+        className={`absolute inset-x-0 top-0 h-[72px] border-b backdrop-blur-xl backdrop-saturate-150 transition-[background-color,border-color,opacity] duration-500 ${
+          open ? "opacity-0" : scrolled ? "border-ink/[0.07] bg-paper/55" : "border-transparent bg-paper/25"
+        }`}
+      />
+      <div className="relative flex h-[72px] items-center justify-between px-5 md:px-12 lg:px-20">
         <a href="#top" onClick={go("#top")} aria-label={`${site.name}, back to top`} className="relative z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/brand/logo.png" alt={site.name} width={1140} height={450} className="h-11 w-auto md:h-12" />
+          <img src="/brand/logo-dark.png" alt={site.name} width={1140} height={450} className="h-11 w-auto md:h-12" />
         </a>
 
         <nav aria-label="Main" className="hidden items-center gap-9 md:flex">
@@ -49,7 +53,7 @@ export default function Header() {
               key={n.href}
               href={n.href}
               onClick={go(n.href)}
-              className="eyebrow relative text-[0.66rem] text-white/75 transition-colors after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-full after:origin-right after:scale-x-0 after:bg-red after:transition-transform after:duration-300 hover:text-white hover:after:origin-left hover:after:scale-x-100"
+              className="eyebrow relative text-[0.66rem] text-ink/75 transition-colors after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-full after:origin-right after:scale-x-0 after:bg-red after:transition-transform after:duration-300 hover:text-ink hover:after:origin-left hover:after:scale-x-100"
             >
               {n.label}
             </a>
@@ -67,14 +71,14 @@ export default function Header() {
           aria-label={open ? "Close menu" : "Open menu"}
           onClick={() => setOpen((v) => !v)}
         >
-          <span className={`absolute h-0.5 w-6 bg-white transition-transform duration-300 ${open ? "rotate-45" : "-translate-y-1.5"}`} />
-          <span className={`absolute h-0.5 w-6 bg-white transition-transform duration-300 ${open ? "-rotate-45" : "translate-y-1.5"}`} />
+          <span className={`absolute h-0.5 w-6 bg-ink transition-transform duration-300 ${open ? "rotate-45" : "-translate-y-1.5"}`} />
+          <span className={`absolute h-0.5 w-6 bg-ink transition-transform duration-300 ${open ? "-rotate-45" : "translate-y-1.5"}`} />
         </button>
       </div>
 
       <div
         id="mobile-menu"
-        className={`fixed inset-0 flex flex-col justify-center gap-2 bg-ink px-6 transition-[opacity,visibility] duration-500 md:hidden ${
+        className={`fixed inset-0 flex flex-col justify-center gap-2 bg-paper px-6 transition-[opacity,visibility] duration-500 md:hidden ${
           open ? "visible opacity-100" : "invisible opacity-0"
         }`}
       >

@@ -15,7 +15,7 @@ export default function Home() {
       <Header />
       <main id="main">
         <Experience />
-        <Reveal className="relative z-10 bg-ink">
+        <Reveal className="relative z-10 bg-paper">
           <Programmes />
           <Membership />
           <Enquiry />

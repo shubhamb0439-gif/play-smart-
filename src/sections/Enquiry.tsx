@@ -44,15 +44,15 @@ export default function Enquiry() {
       <div aria-hidden className="pointer-events-none absolute -right-40 bottom-0 h-[38rem] w-[38rem] rounded-full bg-red/15 blur-[140px]" />
       <div className="relative grid gap-16 lg:grid-cols-[1fr_minmax(0,34rem)] lg:gap-24">
         <div>
-          <p data-reveal className="eyebrow mb-5 flex items-center gap-3 text-white/60">
+          <p data-reveal className="eyebrow mb-5 flex items-center gap-3 text-ink/60">
             <span className="text-red">06</span>
-            <span className="h-px w-10 bg-white/30" />
+            <span className="h-px w-10 bg-ink/30" />
             Free trial
           </p>
           <h2 data-reveal className="display text-[clamp(2.8rem,6.5vw,6rem)]">
             Your first session <span className="text-red">is on us.</span>
           </h2>
-          <p data-reveal className="mt-6 max-w-md text-white/65 md:text-lg">
+          <p data-reveal className="mt-6 max-w-md text-ink/65 md:text-lg">
             Tell us your goal and when you like to train. A coach will call you within a day to book your free assessment and session.
           </p>
 
@@ -67,7 +67,7 @@ export default function Enquiry() {
             </div>
             <div>
               <dt className="eyebrow mb-3 text-[0.62rem] text-red">Visit</dt>
-              <dd className="text-white/75">
+              <dd className="text-ink/75">
                 {site.contact.address.street}
                 <br />
                 {site.contact.address.city}
@@ -76,7 +76,7 @@ export default function Enquiry() {
             <div className="sm:col-span-2">
               <dt className="eyebrow mb-3 text-[0.62rem] text-red">Hours</dt>
               {site.hours.map((h) => (
-                <dd key={h.days} className="flex max-w-xs justify-between border-t border-white/10 py-2 text-white/75">
+                <dd key={h.days} className="flex max-w-xs justify-between border-t border-ink/10 py-2 text-ink/75">
                   <span>{h.days}</span>
                   <span>{h.time}</span>
                 </dd>
@@ -91,12 +91,12 @@ export default function Enquiry() {
           </a>
         </div>
 
-        <form data-reveal onSubmit={onSubmit} noValidate className="relative border border-white/10 bg-coal/80 p-6 backdrop-blur md:p-10">
+        <form data-reveal onSubmit={onSubmit} noValidate className="relative border border-ink/10 bg-white p-6 backdrop-blur md:p-10">
           {status.kind === "sent" ? (
             <div role="status" className="flex min-h-[28rem] flex-col justify-center">
               <span className="mb-6 block h-3 w-3 rotate-45 bg-red" />
               <h3 className="display text-4xl">You&apos;re in.</h3>
-              <p className="mt-4 text-white/65">Thanks! A Play Smart coach will call you shortly to book your free session.</p>
+              <p className="mt-4 text-ink/65">Thanks! A Play Smart coach will call you shortly to book your free session.</p>
               <button type="button" onClick={() => setStatus({ kind: "idle" })} className="btn-ghost mt-8 self-start">
                 Send another
               </button>
@@ -113,7 +113,7 @@ export default function Enquiry() {
                 <Select label="Preferred time" name="time" options={times} error={errors.time} />
               </div>
               <label className="grid gap-2">
-                <span className="eyebrow text-[0.6rem] text-white/60">Anything we should know? (optional)</span>
+                <span className="eyebrow text-[0.6rem] text-ink/60">Anything we should know? (optional)</span>
                 <textarea name="message" rows={4} className="field resize-none" placeholder="Injuries, experience, sport you play…" />
               </label>
               {/* Honeypot */}
@@ -136,7 +136,7 @@ function Field({ label, name, error, ...rest }: { label: string; name: string; e
   const id = `f-${name}`;
   return (
     <label htmlFor={id} className="grid gap-2">
-      <span className="eyebrow text-[0.6rem] text-white/60">{label}</span>
+      <span className="eyebrow text-[0.6rem] text-ink/60">{label}</span>
       <input id={id} name={name} className="field" aria-invalid={!!error} aria-describedby={error ? `${id}-err` : undefined} {...rest} />
       {error && (
         <span id={`${id}-err`} className="text-xs text-red-hot">
@@ -151,7 +151,7 @@ function Select({ label, name, options, error, required }: { label: string; name
   const id = `f-${name}`;
   return (
     <label htmlFor={id} className="grid gap-2">
-      <span className="eyebrow text-[0.6rem] text-white/60">{label}</span>
+      <span className="eyebrow text-[0.6rem] text-ink/60">{label}</span>
       <select id={id} name={name} defaultValue="" required={required} className="field" aria-invalid={!!error}>
         <option value="" disabled>
           Select…

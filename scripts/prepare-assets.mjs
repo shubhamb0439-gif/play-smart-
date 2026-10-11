@@ -1,6 +1,7 @@
 /**
  * Builds the logo assets from assets/brand/logo-source.png:
- *  public/brand/logo.png (transparent), public/brand/mark.png (the "P" only), src/app/icon.png
+ *  public/brand/logo.png + mark.png (for dark backgrounds), logo-dark.png + mark-dark.png
+ *  (white artwork turned ink, for light backgrounds), and src/app/icon.png
  *
  * Re-run with `npm run assets` after replacing a source file.
  */
@@ -33,7 +34,16 @@ async function logo() {
   const mark = await keyOutBlack(up({ left: 160, top: 150, width: 150, height: 90 }));
   await (await mark.png().toBuffer().then((b) => sharp(b).trim({ threshold: 1 }))).png().toFile("public/brand/mark.png");
   await sharp(LOGO_IN).extract({ left: 160, top: 140, width: 150, height: 110 }).resize(512, 512, { fit: "contain", background: "#000" }).png().toFile("src/app/icon.png");
-  console.log("logo -> public/brand/logo.png, mark.png, src/app/icon.png");
+  for (const name of ["logo", "mark"]) {
+    const { data, info } = await sharp(`public/brand/${name}.png`).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+    for (let i = 0; i < data.length; i += 4) {
+      const [r, g, b] = [data[i], data[i + 1], data[i + 2]];
+      const sat = Math.max(r, g, b) - Math.min(r, g, b);
+      if (sat < 60) [data[i], data[i + 1], data[i + 2]] = [12, 12, 13];
+    }
+    await sharp(data, { raw: info }).png().toFile(`public/brand/${name}-dark.png`);
+  }
+  console.log("logo -> public/brand/logo(-dark).png, mark(-dark).png, src/app/icon.png");
 }
 
 await logo();

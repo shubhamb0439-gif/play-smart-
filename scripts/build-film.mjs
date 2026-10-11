@@ -35,9 +35,9 @@ const WATERMARK = { x: 1130, y: 650, w: 120, h: 46 };
  * focusX:    where the athlete sits horizontally in the final (possibly mirrored) frame, 0..1.
  */
 const CLIPS = [
-  { id: "curl", file: "grok-video-41dea9ae-c32a-4e57-8373-145c8b187aad.mp4", start: 0, end: 3.85, mirror: true, focusX: 0.56 },
-  { id: "squat", file: "grok-video-fb7d9bbd-56f8-4637-9d9a-a5f47db1bd38.mp4", start: 1.2, end: 6.04, mirror: false, focusX: 0.5 },
-  { id: "deadlift", file: "grok-video-a5e52f9c-0311-4aea-8526-2ee997dcc5d2.mp4", start: 0, end: 6.04, mirror: false, focusX: 0.5 },
+  { id: "curl", file: "grok-video-05afc57c-d71c-4afe-93e1-4bdebf791e89.mp4", start: 0, end: 3.6, mirror: false, focusX: 0.5 },
+  { id: "squat", file: "grok-video-7f0df9e1-f505-4c8f-9f38-0d221892660f.mp4", start: 0, end: 6.04, mirror: false, focusX: 0.5 },
+  { id: "deadlift", file: "grok-video-f0072aab-24c7-42e4-842a-3d7051e2e5e8.mp4", start: 0.75, end: 4.2, mirror: false, focusX: 0.5 },
 ];
 
 const DESKTOP = { width: 1920, height: 1080, quality: 74 };
@@ -132,14 +132,27 @@ async function patchWatermark(file, mirrored) {
       const t = Math.min(1, d / M);
       alpha[j * w + i] = Math.round(255 * t * t * (3 - 2 * t));
     }
-  const patch = await sharp(file)
-    .extract({ left: srcX, top: y, width: w, height: h })
+  // sharp runs removeAlpha() after joinChannel() whatever the call order, so each step is its
+  // own pipeline: flatten to raw RGB first, then attach the feathered alpha.
+  const rgb = (img) => img.removeAlpha().raw().toBuffer({ resolveWithObject: true });
+  const feathered = ({ data, info }) => sharp(data, { raw: info }).joinChannel(alpha, { raw: { width: w, height: h, channels: 1 } }).png().toBuffer();
 
-    .removeAlpha()
-    .joinChannel(alpha, { raw: { width: w, height: h, channels: 1 } })
-    .png()
-    .toBuffer();
-  const out = await sharp(file).composite([{ input: patch, left: x, top: y }]).png({ compressionLevel: 6 }).toBuffer();
+  const patch = await feathered(await rgb(sharp(file).extract({ left: srcX, top: y, width: w, height: h })));
+  const patched = await sharp(file).composite([{ input: patch, left: x, top: y }]).png().toBuffer();
+
+  // Smear the box horizontally so any seam reads as a floor streak. Blur a wider strip and keep
+  // its centre, so the kernel never samples padding.
+  const K = 41;
+  const bx = Math.max(0, x - K);
+  const bw = Math.min(DESKTOP.width, x + w + K) - bx;
+  const strip = await rgb(sharp(patched).extract({ left: bx, top: y, width: bw, height: h }));
+  const blurred = await rgb(
+    sharp(strip.data, { raw: strip.info }).convolve({ width: K, height: 3, kernel: [...new Array(K).fill(0), ...new Array(K).fill(1), ...new Array(K).fill(0)] }),
+  );
+  const centre = await rgb(sharp(blurred.data, { raw: blurred.info }).extract({ left: x - bx, top: 0, width: w, height: h }));
+  const smear = await feathered(centre);
+  const composed = await sharp(patched).composite([{ input: smear, left: x, top: y }]).png().toBuffer();
+  const out = await sharp(composed).removeAlpha().png({ compressionLevel: 6 }).toBuffer();
   await fs.writeFile(file, out);
 }
 

@@ -151,8 +151,8 @@ export default function Experience() {
         </div>
 
         {/* Legibility gradients behind the copy. */}
-        <div data-shade="left" className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgb(0_0_0/0.8)_0%,rgb(0_0_0/0.25)_45%,transparent_60%)] max-md:bg-[linear-gradient(0deg,rgb(0_0_0/0.92)_0%,rgb(0_0_0/0.4)_45%,transparent_65%)] [[data-clean]_&]:hidden" />
-        <div data-shade="right" className="pointer-events-none invisible absolute inset-0 bg-[linear-gradient(270deg,rgb(0_0_0/0.85)_0%,rgb(0_0_0/0.3)_45%,transparent_62%)] max-md:bg-[linear-gradient(0deg,rgb(0_0_0/0.92)_0%,rgb(0_0_0/0.4)_45%,transparent_65%)] [[data-clean]_&]:hidden" />
+        <div data-shade="left" className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgb(253_253_253/0.8)_0%,rgb(253_253_253/0.25)_45%,transparent_60%)] max-md:bg-[linear-gradient(0deg,rgb(253_253_253/0.96)_0%,rgb(253_253_253/0.85)_42%,transparent_68%)] [[data-clean]_&]:hidden" />
+        <div data-shade="right" className="pointer-events-none invisible absolute inset-0 bg-[linear-gradient(270deg,rgb(253_253_253/0.85)_0%,rgb(253_253_253/0.3)_45%,transparent_62%)] max-md:bg-[linear-gradient(0deg,rgb(253_253_253/0.96)_0%,rgb(253_253_253/0.85)_42%,transparent_68%)] [[data-clean]_&]:hidden" />
 
         <div className="[[data-clean]_&]:hidden">
           {/* Hero */}
@@ -163,7 +163,7 @@ export default function Experience() {
             <h1 className="display text-[clamp(3.2rem,9vw,8.5rem)]">
               <Lines lines={hero.title} />
             </h1>
-            <p data-fade className="mt-6 max-w-md text-base text-white/70 md:text-lg">
+            <p data-fade className="mt-6 max-w-md text-base text-ink/70 md:text-lg">
               {hero.body}
             </p>
             <div data-fade className="mt-8 flex flex-wrap gap-3">
@@ -177,8 +177,8 @@ export default function Experience() {
           </div>
 
           <div data-scroll-cue className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-3 md:flex">
-            <span className="eyebrow text-[0.6rem] text-white/50">Scroll to train</span>
-            <span className="relative h-12 w-px overflow-hidden bg-white/15">
+            <span className="eyebrow text-[0.6rem] text-ink/50">Scroll to train</span>
+            <span className="relative h-12 w-px overflow-hidden bg-ink/15">
               <span className="absolute inset-x-0 top-0 h-1/2 animate-[cue_1.8s_ease-in-out_infinite] bg-red" />
             </span>
           </div>
@@ -192,20 +192,20 @@ export default function Experience() {
                 i === 1 ? "md:right-0 md:left-auto md:w-[52%] md:pr-12 lg:pr-20" : "md:w-[52%] md:px-12 lg:px-20"
               }`}
             >
-              <p data-fade className="eyebrow mb-5 flex items-center gap-3 text-white/60">
+              <p data-fade className="eyebrow mb-5 flex items-center gap-3 text-ink/60">
                 <span className="text-red">{c.index}</span>
-                <span className="h-px w-10 bg-white/30" />
+                <span className="h-px w-10 bg-ink/30" />
                 {c.tag}
               </p>
               <h2 className="display text-[clamp(2.4rem,4.9vw,5.4rem)]">
                 <Lines lines={c.title} />
               </h2>
-              <p data-fade className="mt-6 max-w-md text-base text-white/70 md:text-lg">
+              <p data-fade className="mt-6 max-w-md text-base text-ink/70 md:text-lg">
                 {c.body}
               </p>
               <ul className="mt-7 hidden max-w-md space-y-3 md:block">
                 {c.points.map((pt) => (
-                  <li key={pt} data-fade className="flex items-center gap-3 border-t border-white/10 pt-3 text-sm text-white/80">
+                  <li key={pt} data-fade className="flex items-center gap-3 border-t border-ink/10 pt-3 text-sm text-ink/80">
                     <span className="h-1.5 w-1.5 rotate-45 bg-red" />
                     {pt}
                   </li>
@@ -230,19 +230,19 @@ export default function Experience() {
           <div ref={hud} data-hud className="pointer-events-none absolute right-5 bottom-6 left-5 flex items-end justify-between whitespace-nowrap md:left-1/2 md:w-80 md:-translate-x-1/2">
             <div className="w-full">
               <div className="mb-2 flex items-baseline justify-between gap-4">
-                <span data-hud-chapter className="eyebrow text-[0.62rem] text-white/80">
+                <span data-hud-chapter className="eyebrow text-[0.62rem] text-ink/80">
                   {chapters[0].lift}
                 </span>
                 <span data-hud-rep className="eyebrow text-[0.62rem] text-red">
                   01 / 0{chapters.length}
                 </span>
               </div>
-              <div className="h-px w-full bg-white/15">
+              <div className="h-px w-full bg-ink/15">
                 <div data-hud-bar className="h-px origin-left scale-x-0 bg-red" />
               </div>
               <div className="mt-3 flex gap-2">
                 {chapters.map((c) => (
-                  <span key={c.id} data-hud-dot className="h-1 flex-1 bg-white/15 data-[active]:bg-white/80" />
+                  <span key={c.id} data-hud-dot className="h-1 flex-1 bg-ink/15 data-[active]:bg-ink/80" />
                 ))}
               </div>
             </div>
@@ -253,7 +253,7 @@ export default function Experience() {
         {WIPES.map((w, i) => (
           <div key={i} aria-hidden className="pointer-events-none absolute inset-0">
             <div data-wipe-red={i} className="absolute inset-0 bg-red" style={{ clipPath: poly(100, 100) }} />
-            <div data-wipe-black={i} className="absolute inset-0 grid place-items-center bg-ink" style={{ clipPath: poly(100, 100) }}>
+            <div data-wipe-black={i} className="absolute inset-0 grid place-items-center bg-paper" style={{ clipPath: poly(100, 100) }}>
               <div data-wipe-label={i} className="invisible text-center">
                 <p className="display outline-text text-[clamp(5rem,18vw,16rem)]">{w.next.index}</p>
                 <p className="eyebrow mt-4 text-red">{w.next.tag}</p>

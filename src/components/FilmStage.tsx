@@ -18,7 +18,7 @@ const PORTRAIT_FILL = 0.55;
 /**
  * Scroll-scrubbed film: the Grok clips as one frame sequence drawn on a canvas.
  * Each clip can be shifted/scaled on wide screens (so the athlete sits opposite the copy);
- * any exposed edge is feathered into black, so the frame melts into the page.
+ * any exposed edge is feathered into the clip's background, so the frame melts into the page.
  */
 export default function FilmStage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -102,7 +102,7 @@ export default function FilmStage() {
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="absolute inset-0 h-full w-full bg-black" style={{ opacity: 0 }} aria-hidden="true" />;
+  return <canvas ref={canvasRef} className="absolute inset-0 h-full w-full bg-paper" style={{ opacity: 0 }} aria-hidden="true" />;
 }
 
 function draw(ctx: CanvasRenderingContext2D, img: Frame, cw: number, ch: number, clip: ClipId, kind: DeviceKind, zoom: number) {
@@ -123,18 +123,21 @@ function draw(ctx: CanvasRenderingContext2D, img: Frame, cw: number, ch: number,
   if (w >= cw) x = Math.min(Math.max(x, cw - w - w * 0.25), w * 0.25);
   const y = landscape ? (ch - h) / 2 : Math.max(0, Math.min(ch * 0.4 - h / 2, ch - h));
 
-  ctx.fillStyle = "#000";
+  // Paint the clip's own background colour around the frame, and feather into it.
+  const bg = clips[clip].colors.border;
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(bg.slice(i, i + 2), 16));
+  ctx.fillStyle = bg;
   ctx.fillRect(0, 0, cw, ch);
   ctx.drawImage(img, x, y, w, h);
 
   // Feather any edge of the frame that sits inside the canvas.
   const fx = w * 0.14;
-  const fy = h * 0.16;
+  const fy = h * 0.08;
   const fade = (x0: number, y0: number, x1: number, y1: number, rx: number, ry: number, rw: number, rh: number) => {
-    const g = ctx.createLinearGradient(x0, y0, x1, y1);
-    g.addColorStop(0, "rgba(0,0,0,1)");
-    g.addColorStop(1, "rgba(0,0,0,0)");
-    ctx.fillStyle = g;
+    const grad = ctx.createLinearGradient(x0, y0, x1, y1);
+    grad.addColorStop(0, `rgba(${r},${g},${b},1)`);
+    grad.addColorStop(1, `rgba(${r},${g},${b},0)`);
+    ctx.fillStyle = grad;
     ctx.fillRect(rx, ry, rw, rh);
   };
   if (x > 0.5) fade(x, 0, x + fx, 0, x, 0, fx, ch);

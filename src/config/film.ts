@@ -30,36 +30,44 @@ export function frameUrls(kind: DeviceKind): string[] {
  * and fast ones (the drive up) each get a fair share of the scroll.
  */
 const CURVES: Record<ClipId, [number, number][]> = {
-  // Clip holds the curl up + squeeze; the lowering half plays it back in reverse.
+  // 0-0.5 s arm down, 0.5-1.5 s curl up, then a squeeze while the camera eases in.
+  // The lowering half plays it back in reverse.
   curl: [
     [0, 0],
-    [0.06, 0],
-    [0.46, 70],
-    [0.56, 92],
-    [0.62, 92],
-    [0.96, 0],
+    [0.05, 8],
+    [0.34, 36],
+    [0.56, 86],
+    [0.62, 86],
+    [0.84, 36],
+    [0.97, 0],
     [1, 0],
   ],
+  // Two reps on a locked camera; the quick descents get stretched across more scroll.
   squat: [
     [0, 0],
-    [0.06, 24],
-    [0.5, 77],
-    [0.6, 94],
-    [0.95, 115],
-    [1, 115],
-  ],
-  deadlift: [
-    [0, 0],
-    [0.1, 36],
-    [0.42, 66],
-    [0.55, 100],
-    [0.9, 130],
+    [0.04, 12],
+    [0.19, 30],
+    [0.25, 48],
+    [0.38, 60],
+    [0.47, 90],
+    [0.62, 108],
+    [0.68, 126],
+    [0.84, 138],
+    [0.9, 144],
     [1, 144],
   ],
+  // From the floor: pull, lockout hold, lower, pull again, finish standing.
+  deadlift: [
+    [0, 0],
+    [0.06, 4],
+    [0.28, 16],
+    [0.36, 49],
+    [0.58, 66],
+    [0.62, 68],
+    [0.88, 80],
+    [1, 82],
+  ],
 };
-
-/** Deadlift lockout frame the outro settles on ("standing tall"). */
-const LOCKOUT = 84;
 
 function sample(curve: [number, number][], u: number) {
   for (let i = 1; i < curve.length; i++) {
@@ -79,9 +87,9 @@ function sample(curve: [number, number][], u: number) {
  * The frame is shifted/scaled and any exposed edge feathers into black.
  */
 export const COMPOSE: Record<ClipId, { athleteX: number; screenX: number; scale: number }> = {
-  curl: { athleteX: 0.5, screenX: 0.68, scale: 0.9 },
-  squat: { athleteX: 0.5, screenX: 0.29, scale: 0.88 },
-  deadlift: { athleteX: 0.52, screenX: 0.7, scale: 0.8 },
+  curl: { athleteX: 0.47, screenX: 0.7, scale: 0.9 },
+  squat: { athleteX: 0.48, screenX: 0.25, scale: 0.8 },
+  deadlift: { athleteX: 0.5, screenX: 0.68, scale: 0.84 },
 };
 
 /** Which clip and (fractional) frame to show for a scroll progress. */
@@ -92,7 +100,6 @@ export function filmAt(p: number): { clip: ClipId; frame: number } {
   }
   if (p < CUT2) return { clip: "squat", frame: p < SEG.squat[0] ? 0 : sample(CURVES.squat, local(p, SEG.squat)) };
   if (p <= SEG.deadlift[1]) return { clip: "deadlift", frame: p < SEG.deadlift[0] ? 0 : sample(CURVES.deadlift, local(p, SEG.deadlift)) };
-  // Outro: play the lowering backwards up to lockout and hold there.
-  const last = clips.deadlift.count - 1;
-  return { clip: "deadlift", frame: last + (LOCKOUT - last) * local(p, [SEG.outro[0], SEG.outro[0] + 0.045]) };
+  // Outro: the clip already ends standing tall at lockout; hold it.
+  return { clip: "deadlift", frame: clips.deadlift.count - 1 };
 }
