@@ -94,6 +94,8 @@ async function extract(clip) {
     `scale=${DESKTOP.width}:-2:flags=lanczos+accurate_rnd+full_chroma_int`,
     `crop=${DESKTOP.width}:${DESKTOP.height}`,
     "unsharp=5:5:0.55:3:3:0",
+    // Push the near-white studio backdrop (~253) to pure #fff; midtones and the athlete are untouched.
+    "curves=all='0/0 0.75/0.755 0.94/1 1/1'",
   ].filter(Boolean);
   await run(ffmpegPath, [
     "-hide_banner", "-loglevel", "error", "-y",

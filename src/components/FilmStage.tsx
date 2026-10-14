@@ -5,7 +5,6 @@ import { gsap } from "@/lib/gsap";
 import { FrameStore, type Frame } from "@/lib/frameStore";
 import { exp, markReady } from "@/lib/experienceStore";
 import { COMPOSE, clipOffset, clips, filmAt, frameUrls, type ClipId, type DeviceKind } from "@/config/film";
-import { SEG, local } from "@/config/timeline";
 
 const MOBILE_BREAKPOINT = 768;
 /** Playhead smoothing per 60 fps tick (0..1). Lower = silkier, higher = snappier. */
@@ -46,9 +45,11 @@ export default function FilmStage() {
 
     let cw = 0;
     let ch = 0;
+    let top = 0;
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const r = canvas.getBoundingClientRect();
+      top = Math.round(HEADER_PX * dpr);
       cw = Math.max(1, Math.round(r.width * dpr));
       ch = Math.max(1, Math.round(r.height * dpr));
       if (canvas.width !== cw || canvas.height !== ch) {
@@ -82,11 +83,12 @@ export default function FilmStage() {
       store.focus(index);
       const frame = store.nearest(index);
 
-      // Hero starts slightly wide and pushes in as you scroll; the intro adds a gentle settle.
-      const zoom = 1 - 0.07 * (1 - local(p, SEG.hero)) * (p < SEG.curl[0] ? 1 : 0) + 0.04 * (1 - exp.intro);
+      // Small settle during the intro only. (A scroll push-in would grow the frame upward from the
+      // bottom edge and tuck the head under the header.)
+      const zoom = 1 + 0.04 * (1 - exp.intro);
       const key = `${clip}|${zoom.toFixed(4)}|${cw}x${ch}`;
       if (frame && (frame !== drawn || key !== lastKey || needsDraw)) {
-        draw(ctx, frame, cw, ch, clip, kind, zoom);
+        draw(ctx, frame, cw, ch, top, clip, kind, zoom);
         drawn = frame;
         lastKey = key;
         needsDraw = false;
@@ -105,7 +107,10 @@ export default function FilmStage() {
   return <canvas ref={canvasRef} className="absolute inset-0 h-full w-full bg-paper" style={{ opacity: 0 }} aria-hidden="true" />;
 }
 
-function draw(ctx: CanvasRenderingContext2D, img: Frame, cw: number, ch: number, clip: ClipId, kind: DeviceKind, zoom: number) {
+/** Height of the fixed header in CSS px; frames are kept below it so heads never tuck under the bar. */
+const HEADER_PX = 72;
+
+function draw(ctx: CanvasRenderingContext2D, img: Frame, cw: number, ch: number, top: number, clip: ClipId, kind: DeviceKind, zoom: number) {
   const iw = img.width;
   const ih = img.height;
   const landscape = cw / ch > 1.05;
@@ -113,15 +118,16 @@ function draw(ctx: CanvasRenderingContext2D, img: Frame, cw: number, ch: number,
   const c = kind === "desktop" && landscape ? COMPOSE[clip] : { athleteX: kind === "mobile" ? 0.5 : clips[clip].focusX, screenX: 0.5, scale: 1 };
   const cover = Math.max(cw / iw, ch / ih);
   const contain = Math.min(cw / iw, ch / ih);
-  // Portrait screens: part-way between contain and cover, so heads and bars stay in shot,
-  // sitting high so the copy has room underneath.
-  const s = (landscape ? cover : contain * Math.pow(cover / contain, PORTRAIT_FILL)) * c.scale * zoom;
+  // Landscape: fit the height below the header and stand the frame on the bottom edge. The white
+  // backdrop makes any side space invisible, so wide/short windows never crop the head.
+  // Portrait: part-way between contain and cover, sitting high so the copy has room underneath.
+  const s = (landscape ? (ch - top) / ih : contain * Math.pow(cover / contain, PORTRAIT_FILL)) * c.scale * zoom;
   const w = iw * s;
   const h = ih * s;
   let x = c.screenX * cw - c.athleteX * w;
   // Don't open a gap on both sides at once; prefer keeping the frame edge-to-edge where possible.
   if (w >= cw) x = Math.min(Math.max(x, cw - w - w * 0.25), w * 0.25);
-  const y = landscape ? (ch - h) / 2 : Math.max(0, Math.min(ch * 0.4 - h / 2, ch - h));
+  const y = landscape ? ch - h : Math.max(top, Math.min(ch * 0.4 - h / 2, ch - h));
 
   // Paint the clip's own background colour around the frame, and feather into it.
   const bg = clips[clip].colors.border;
@@ -142,8 +148,7 @@ function draw(ctx: CanvasRenderingContext2D, img: Frame, cw: number, ch: number,
   };
   if (x > 0.5) fade(x, 0, x + fx, 0, x, 0, fx, ch);
   if (x + w < cw - 0.5) fade(x + w, 0, x + w - fx, 0, x + w - fx, 0, fx, ch);
-  if (y > 0.5) {
-    fade(0, y, 0, y + fy, 0, y, cw, fy);
-    fade(0, y + h, 0, y + h - fy, 0, y + h - fy, cw, fy);
-  }
+  // Short top fade: the curl clip's head touches the top of its frame, so just soften the edge.
+  if (y > 0.5) fade(0, y, 0, y + h * 0.025, 0, y, cw, h * 0.025);
+  if (y + h < ch - 0.5) fade(0, y + h, 0, y + h - fy, 0, y + h - fy, cw, fy);
 }

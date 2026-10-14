@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  /* Light theme: the page background matches the film's #fdfdfd studio white. */
-  --color-paper: #fdfdfd;
+  /* Light theme: the page background matches the film's pure-white backdrop. */
+  --color-paper: #ffffff;
   --color-mist: #f3f3f4;
   --color-ink: #0c0c0d;
   --color-red: #dc293b;

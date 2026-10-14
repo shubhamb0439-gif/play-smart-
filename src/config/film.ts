@@ -84,12 +84,13 @@ function sample(curve: [number, number][], u: number) {
 /**
  * Desktop composition per clip. athleteX: where the athlete is in the frame (0..1);
  * screenX: where we want them on screen; scale: relative to "cover".
- * The frame is shifted/scaled and any exposed edge feathers into black.
+ * The frame is shifted/scaled and any exposed edge feathers into the white backdrop.
  */
 export const COMPOSE: Record<ClipId, { athleteX: number; screenX: number; scale: number }> = {
-  curl: { athleteX: 0.47, screenX: 0.7, scale: 0.9 },
-  squat: { athleteX: 0.48, screenX: 0.25, scale: 0.8 },
-  deadlift: { athleteX: 0.5, screenX: 0.68, scale: 0.84 },
+  // >1 tucks the top of the frame (where the source crops the scalp) under the header bar.
+  curl: { athleteX: 0.47, screenX: 0.7, scale: 1.025 },
+  squat: { athleteX: 0.48, screenX: 0.25, scale: 0.92 },
+  deadlift: { athleteX: 0.5, screenX: 0.68, scale: 0.95 },
 };
 
 /** Which clip and (fractional) frame to show for a scroll progress. */

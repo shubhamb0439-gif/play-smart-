@@ -151,12 +151,12 @@ export default function Experience() {
         </div>
 
         {/* Legibility gradients behind the copy. */}
-        <div data-shade="left" className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgb(253_253_253/0.8)_0%,rgb(253_253_253/0.25)_45%,transparent_60%)] max-md:bg-[linear-gradient(0deg,rgb(253_253_253/0.96)_0%,rgb(253_253_253/0.85)_42%,transparent_68%)] [[data-clean]_&]:hidden" />
-        <div data-shade="right" className="pointer-events-none invisible absolute inset-0 bg-[linear-gradient(270deg,rgb(253_253_253/0.85)_0%,rgb(253_253_253/0.3)_45%,transparent_62%)] max-md:bg-[linear-gradient(0deg,rgb(253_253_253/0.96)_0%,rgb(253_253_253/0.85)_42%,transparent_68%)] [[data-clean]_&]:hidden" />
+        <div data-shade="left" className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgb(255_255_255/0.8)_0%,rgb(255_255_255/0.25)_45%,transparent_60%)] max-md:bg-[linear-gradient(0deg,rgb(255_255_255/0.96)_0%,rgb(255_255_255/0.85)_42%,transparent_68%)] [[data-clean]_&]:hidden" />
+        <div data-shade="right" className="pointer-events-none invisible absolute inset-0 bg-[linear-gradient(270deg,rgb(255_255_255/0.85)_0%,rgb(255_255_255/0.3)_45%,transparent_62%)] max-md:bg-[linear-gradient(0deg,rgb(255_255_255/0.96)_0%,rgb(255_255_255/0.85)_42%,transparent_68%)] [[data-clean]_&]:hidden" />
 
         <div className="[[data-clean]_&]:hidden">
           {/* Hero */}
-          <div data-hero className="absolute inset-x-0 bottom-0 px-5 pb-24 md:inset-y-0 md:flex md:flex-col md:justify-center md:px-12 md:pb-0 lg:px-20">
+          <div data-hero className="absolute inset-x-0 bottom-0 px-5 pb-24 md:inset-y-0 md:flex md:flex-col md:justify-center md:px-12 md:pt-[72px] md:pb-0 lg:px-20">
             <p data-fade className="eyebrow mb-5 text-red">
               {hero.eyebrow}
             </p>
@@ -176,7 +176,7 @@ export default function Experience() {
             </div>
           </div>
 
-          <div data-scroll-cue className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-3 md:flex">
+          <div data-scroll-cue className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-3 md:flex [@media(max-height:700px)]:!hidden">
             <span className="eyebrow text-[0.6rem] text-ink/50">Scroll to train</span>
             <span className="relative h-12 w-px overflow-hidden bg-ink/15">
               <span className="absolute inset-x-0 top-0 h-1/2 animate-[cue_1.8s_ease-in-out_infinite] bg-red" />
@@ -188,7 +188,7 @@ export default function Experience() {
             <article
               key={c.id}
               data-panel={i}
-              className={`invisible absolute inset-x-0 bottom-0 px-5 pb-24 md:inset-y-0 md:flex md:flex-col md:justify-center md:pb-0 ${
+              className={`invisible absolute inset-x-0 bottom-0 px-5 pb-24 md:inset-y-0 md:flex md:flex-col md:justify-center md:pt-[72px] md:pb-0 ${
                 i === 1 ? "md:right-0 md:left-auto md:w-[52%] md:pr-12 lg:pr-20" : "md:w-[52%] md:px-12 lg:px-20"
               }`}
             >
@@ -215,7 +215,7 @@ export default function Experience() {
           ))}
 
           {/* Outro */}
-          <div data-outro className="absolute inset-x-0 bottom-0 px-5 pb-24 text-left md:inset-y-0 md:flex md:w-1/2 md:flex-col md:justify-center md:px-12 md:pb-0 lg:px-20">
+          <div data-outro className="absolute inset-x-0 bottom-0 px-5 pb-24 text-left md:inset-y-0 md:flex md:w-1/2 md:flex-col md:justify-center md:px-12 md:pt-[72px] md:pb-0 lg:px-20">
             <h2 className="display text-[clamp(3rem,8vw,7.5rem)]">
               <Lines lines={["Your", "turn."]} />
             </h2>

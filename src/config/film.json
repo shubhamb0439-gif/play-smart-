@@ -8,20 +8,20 @@
         "folder": "/film/curl/desktop",
         "width": 1920,
         "height": 1080,
-        "bytes": 2890166
+        "bytes": 2959478
       },
       "mobile": {
         "folder": "/film/curl/mobile",
         "width": 720,
         "height": 900,
-        "bytes": 2053858
+        "bytes": 2125732
       },
       "colors": {
-        "border": "#fdfdfd",
-        "left": "#fdfdfd",
-        "right": "#fdfdfd",
-        "top": "#fdfdfd",
-        "bottom": "#fcf0f1"
+        "border": "#ffffff",
+        "left": "#ffffff",
+        "right": "#ffffff",
+        "top": "#ffffff",
+        "bottom": "#fffefe"
       }
     },
     "squat": {
@@ -32,20 +32,20 @@
         "folder": "/film/squat/desktop",
         "width": 1920,
         "height": 1080,
-        "bytes": 7146172
+        "bytes": 7474416
       },
       "mobile": {
         "folder": "/film/squat/mobile",
         "width": 720,
         "height": 900,
-        "bytes": 4471736
+        "bytes": 4592282
       },
       "colors": {
-        "border": "#fdfdfd",
-        "left": "#fdfdfd",
-        "right": "#fdfdfd",
-        "top": "#fdfdfd",
-        "bottom": "#f5b6b9"
+        "border": "#ffffff",
+        "left": "#ffffff",
+        "right": "#ffffff",
+        "top": "#ffffff",
+        "bottom": "#feb1b6"
       }
     },
     "deadlift": {
@@ -56,24 +56,24 @@
         "folder": "/film/deadlift/desktop",
         "width": 1920,
         "height": 1080,
-        "bytes": 3521148
+        "bytes": 3415010
       },
       "mobile": {
         "folder": "/film/deadlift/mobile",
         "width": 720,
         "height": 900,
-        "bytes": 2054140
+        "bytes": 2050090
       },
       "colors": {
         "border": "#ffffff",
-        "left": "#fffffc",
-        "right": "#fffffe",
+        "left": "#ffffff",
+        "right": "#ffffff",
         "top": "#ffffff",
-        "bottom": "#fdfdfb"
+        "bottom": "#ffffff"
       }
     }
   },
-  "version": "mv41v5eq",
+  "version": "mv7vlt1x",
   "pad": 4,
   "pattern": "frame_{index}.webp"
 }
